@@ -35,7 +35,7 @@ public class Memoria {
 
         TipoComando tipoComando = detectarTipoComando(texto);
 
-        if (tipoComando.equals(null)) {
+        if (tipoComando == null) {
             return;
         } else if (tipoComando.equals(TipoComando.ZERAR)) {
             textoAtual = "";
@@ -45,10 +45,42 @@ public class Memoria {
         } else if (tipoComando.equals(TipoComando.NUMERO) || tipoComando.equals(TipoComando.VIRGULA)) {
             textoAtual = substituir ? texto : textoAtual + texto;
             substituir = false;
+        } else {
+            substituir = true;
+            textoAtual = obterResultadoOperacao();
+            textoBuffer = textoAtual;
+            ultimaOperacao = tipoComando;
         }
 
         observadores.forEach(o -> o.valorAlterado(getTextoAtual()));
 
+    }
+
+    //TODO REFATORAR ESSE METODO
+    private String obterResultadoOperacao() {
+        if (ultimaOperacao == null) {
+            return textoAtual;
+        }
+
+        double numeroBuffer = Double.parseDouble(textoBuffer.replace(",", "."));
+        double numeroAtual = Double.parseDouble(textoAtual.replace(",", "."));
+        double resultado = 0;
+
+        if (ultimaOperacao.equals(TipoComando.SOMA)) {
+            resultado = numeroBuffer + numeroAtual;
+        } else if (ultimaOperacao.equals(TipoComando.SUB)) {
+            resultado = numeroBuffer - numeroAtual;
+        } else if (ultimaOperacao.equals(TipoComando.MULT)) {
+            resultado = numeroBuffer * numeroAtual;
+        } else if (ultimaOperacao.equals(TipoComando.DIV)) {
+            resultado = numeroBuffer / numeroAtual;
+        }
+
+        String resultadoString = Double.toString(resultado).replace(".", ",");
+
+        boolean inteiro = resultadoString.endsWith(",0");
+
+        return inteiro ? resultadoString.replace(",0", "") : resultadoString;
     }
 
     //TODO REFATORAR ESSE METODO
