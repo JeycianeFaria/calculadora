@@ -1,5 +1,7 @@
 package com.estudos.calculadora.view;
 
+import com.estudos.calculadora.model.Memoria;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -67,7 +69,7 @@ public class Teclado extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton) {
             JButton botao = (JButton) e.getSource();
-            System.out.println(botao.getText());
+            Memoria.getInstance().processarComando(botao.getText());
         }
 
     }
