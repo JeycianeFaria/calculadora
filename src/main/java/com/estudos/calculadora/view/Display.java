@@ -1,5 +1,7 @@
 package com.estudos.calculadora.view;
 
+import com.estudos.calculadora.model.Memoria;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +15,7 @@ public class Display extends JPanel {
 
         setBackground(new Color(40, 44, 52));
 
-        label = new JLabel("12345");
+        label = new JLabel(Memoria.getInstance().getTextoAtual());
         label.setForeground(Color.WHITE);
         label.setFont(new Font("courier", Font.PLAIN, 60));
 
