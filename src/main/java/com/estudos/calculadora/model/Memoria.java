@@ -11,7 +11,10 @@ public class Memoria {
 
     private static final Memoria instancia = new Memoria();
     private final List<MemoriaObservador> observadores = new ArrayList<>();
+    private TipoComando ultimaOperacao = null;
+    private boolean substituir = false;
     private String textoAtual = "";
+    private String textoBuffer = "";
 
     private Memoria() {
     }
@@ -32,10 +35,16 @@ public class Memoria {
 
         TipoComando tipoComando = detectarTipoComando(texto);
 
-        if (texto.equals("AC")) {
+        if (tipoComando.equals(null)) {
+            return;
+        } else if (tipoComando.equals(TipoComando.ZERAR)) {
             textoAtual = "";
-        } else {
-            textoAtual += texto;
+            textoBuffer = "";
+            substituir = false;
+            ultimaOperacao = null;
+        } else if (tipoComando.equals(TipoComando.NUMERO) || tipoComando.equals(TipoComando.VIRGULA)) {
+            textoAtual = substituir ? texto : textoAtual + texto;
+            substituir = false;
         }
 
         observadores.forEach(o -> o.valorAlterado(getTextoAtual()));
@@ -66,7 +75,7 @@ public class Memoria {
                 return TipoComando.SUB;
             } else if (texto.equals("=")) {
                 return TipoComando.IGUAL;
-            } else if (texto.equals(",")) {
+            } else if (texto.equals(",") && !textoAtual.contains(",")) {
                 return TipoComando.VIRGULA;
             }
 
