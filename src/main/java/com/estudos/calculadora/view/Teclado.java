@@ -41,7 +41,7 @@ public class Teclado extends JPanel {
         adicionarBotao("3", CINZA_CLARO, constraints, 2, 3);
         adicionarBotao("+", LARANJA, constraints, 3, 3);
 
-        constraints.gridwidth = 3;
+        constraints.gridwidth = 2;
         adicionarBotao("0", CINZA_CLARO, constraints, 0, 4);
         constraints.gridwidth = 1;
         adicionarBotao(",", CINZA_CLARO, constraints, 2, 4);
