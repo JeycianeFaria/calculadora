@@ -1,11 +1,12 @@
 package com.estudos.calculadora.view;
 
 import com.estudos.calculadora.model.Memoria;
+import com.estudos.calculadora.model.MemoriaObservador;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Display extends JPanel {
+public class Display extends JPanel implements MemoriaObservador {
 
     //TODO pesquisar como diminuir tamanho dos numeros quando vamso adicionando muitos no display.
 
@@ -23,6 +24,11 @@ public class Display extends JPanel {
 
         add(label);
 
+    }
+
+    @Override
+    public void valorAlterado(String novoValor) {
+        label.setText(novoValor);
     }
 
 }
