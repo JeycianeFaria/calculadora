@@ -58,7 +58,7 @@ public class Memoria {
 
     //TODO REFATORAR ESSE METODO
     private String obterResultadoOperacao() {
-        if (ultimaOperacao == null) {
+        if (ultimaOperacao == null || ultimaOperacao.equals(TipoComando.IGUAL)) {
             return textoAtual;
         }
 
